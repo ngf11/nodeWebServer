@@ -6,9 +6,9 @@ const fsPromises = require("fs").promises;
 
 const logEvents = require("./logEvents");
 const eventEmitter = require("events");
-class emitter extends eventEmitter {}
+class Emitter extends eventEmitter {}
 //init object
-const myEmitter = new emitter();
+const myEmitter = new Emitter();
 //port for webserver
 const PORT = process.env.PORT || 3500;
 
@@ -24,12 +24,14 @@ const serveFile = async (filePath, contentType, response) => {
   }
 };
 
-// min server
+//min server
 const server = http.createServer((req, res) => {
   console.log(req.url, req.method);
-  const extention = path.extname(req.url);
+
+  const extension = path.extname(req.url);
   let contentType;
-  switch (extention) {
+
+  switch (extension) {
     case ".css":
       contentType = "text/css";
       break;
@@ -39,11 +41,11 @@ const server = http.createServer((req, res) => {
     case ".json":
       contentType = "application/json";
       break;
-    case ".png":
-      contentType = "image/png";
-      break;
     case ".jpg":
       contentType = "image/jpeg";
+      break;
+    case ".png":
+      contentType = "image/png";
       break;
     case ".txt":
       contentType = "text/plain";
@@ -51,21 +53,22 @@ const server = http.createServer((req, res) => {
     default:
       contentType = "text/html";
   }
+
   let filePath =
     contentType === "text/html" && req.url === "/"
       ? path.join(__dirname, "views", "index.html")
       : contentType === "text/html" && req.url.slice(-1) === "/"
       ? path.join(__dirname, "views", req.url, "index.html")
-      : (contentType = "text/html"
-          ? path.join(__dirname, "views", req.url)
-          : path.join(__dirname, req.url));
-  // makes the .html extetion not require
-  if (!extention && req.url.slice(-1) !== "/") {
-    filePath += ".html";
-  }
+      : contentType === "text/html"
+      ? path.join(__dirname, "views", req.url)
+      : path.join(__dirname, req.url);
+  //makes .html extecion  not require in the browser
+  if (!extension && req.url.slice(-1) !== "/") filePath += ".html";
+
   const fileExist = fs.existsSync(filePath);
+
   if (fileExist) {
-    //serve the file
+    //serve file
     serveFile(filePath, contentType, res);
   } else {
     //404 || 301
@@ -79,15 +82,12 @@ const server = http.createServer((req, res) => {
         res.end();
         break;
       default:
-        //serve 404 response
+        //server 404
         serveFile(path.join(__dirname, "views", "404.html"), "text/html", res);
     }
   }
 });
-//server lisent to request
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-//add a listener the log event
+
 // myEmitter.on("log", (msg) => logEvents(msg));
-// //emit event
-// myEmitter.emit("log", "Log event Emitted");
-//1.35.16
+// myEmitter.emit("log", "log event emitted!");
