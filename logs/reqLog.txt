@@ -1,0 +1,7 @@
+11.09.2023	05:57:01	c6b2b450-1d42-4b3b-b63e-7cf322a1cc0a	/new-page.html	GET
+11.09.2023	05:57:01	d0fe8904-e32e-429c-9daf-9d84f3d10468	/css/style.css	GET
+11.09.2023	05:57:01	b48b08de-b71c-42a1-8880-405b57acbd9b	/img/img1.png	GET
+11.09.2023	05:58:18	c594b47e-f09e-4ae1-a6a6-06841a946270	/new-page.html	GET
+11.09.2023	06:04:24	ec246c84-fb08-43dc-bc4d-39bfa68db922	/new-page.html	GET
+11.09.2023	06:04:24	9ea6d2de-9208-4339-bc70-84935aa42861	/css/style.css	GET
+11.09.2023	06:04:24	c63554dc-40bb-4c72-b4fa-5041213339a6	/img/img1.png	GET
